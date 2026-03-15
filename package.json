@@ -1,14 +1,10 @@
 {
   "name": "yt-xd",
   "version": "1.0.0",
-  "description": "GitHub Pages frontend + Cloudflare Worker backend for Advanced Physics thumbnails",
-  "main": "worker.mjs",
+  "description": "Static Advanced Physics thumbnail generator",
   "scripts": {
-    "dev:site": "node dev-site.mjs",
-    "smoke:render": "node smoke-render.mjs",
-    "dev:worker": "wrangler dev",
-    "deploy:worker": "wrangler deploy",
-    "check": "node --check app.js && node --check worker.mjs && node --check dev-site.mjs && node --check smoke-render.mjs && node --check thumbnail-common.mjs && node --check thumbnail-service.mjs"
+    "dev": "node dev-site.mjs",
+    "check": "node --check app.js && node --check dev-site.mjs"
   },
   "repository": {
     "type": "git",
@@ -22,12 +18,5 @@
     "url": "https://github.com/aniketrajnish/yt-xd/issues"
   },
   "homepage": "https://github.com/aniketrajnish/yt-xd#readme",
-  "dependencies": {
-    "@resvg/resvg-wasm": "^2.6.2",
-    "opentype.js": "^1.3.4"
-  },
-  "devDependencies": {
-    "wrangler": "^4.37.1"
-  },
   "private": true
 }

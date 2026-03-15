@@ -169,6 +169,10 @@ button:disabled {
   cursor: not-allowed;
 }
 
+#downloadButton {
+  min-width: 96px;
+}
+
 .status {
   min-height: 20px;
   margin: 10px 0 0;
