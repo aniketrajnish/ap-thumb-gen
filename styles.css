@@ -186,26 +186,18 @@ button:disabled {
   color: var(--danger);
 }
 
-.result-title,
-.result-detail {
-  margin: 0;
-}
-
-.result-title {
-  font-weight: 700;
-}
-
-.result-detail {
-  margin-top: 4px;
-  color: var(--muted);
-}
-
 .preview {
   display: block;
   width: 100%;
-  margin-top: 12px;
   border: 1px solid var(--line);
   background: var(--preview-bg);
+}
+
+.footer-note {
+  padding: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
 }
 
 @media (max-width: 720px) {

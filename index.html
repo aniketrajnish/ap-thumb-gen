@@ -15,7 +15,7 @@
               advanced physics
             </a>
           </h1>
-          <p class="brand-subtitle">paste youtube video url and press generate</p>
+          <p class="brand-subtitle">paste youtube url, generate thumbnail</p>
         </div>
       </header>
 
@@ -33,14 +33,16 @@
           <button id="generateButton" type="submit">generate</button>
           <button id="downloadButton" type="button" disabled>download</button>
         </form>
-        <p id="statusText" class="status">ready.</p>
+        <p id="statusText" class="status">ready</p>
       </section>
 
       <section id="result" class="panel result" hidden>
-        <p id="resultTitle" class="result-title"></p>
-        <p id="resultDetail" class="result-detail"></p>
         <img id="previewImage" class="preview" alt="Rendered thumbnail preview" />
       </section>
+
+      <footer class="footer-note">
+        koi dikkat ho ya thumbnail sahi nai lage to call kriega papa
+      </footer>
     </main>
 
     <script src="./app.js" defer></script>
