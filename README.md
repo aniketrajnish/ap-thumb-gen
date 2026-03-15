@@ -1,24 +1,24 @@
 # yt-xd
 
-Adobe XD panel + local Node uploader for the Advanced Physics thumbnail workflow:
+Headless website + local uploader for the Advanced Physics thumbnail workflow.
 
-1. Open `ap.xd` in Adobe XD.
-2. Paste a YouTube video URL from the Advanced Physics channel.
-3. Split the title into `Course Name - Lesson Title`.
-4. Reuse the matching course artboard or duplicate a fallback artboard if the course does not exist yet.
-5. Fit the green lesson text so it stays inside the layout.
-6. Export the PNG, save it to `C:\Personal Projects\ap`, and upload it with YouTube's `thumbnails.set` API.
+## Flow
+
+1. Paste a YouTube video URL from the Advanced Physics channel into the website.
+2. The server reads [ap.xd](C:\Personal Projects\yt-xd\ap.xd) directly, extracts the matching course template, and renders the thumbnail headlessly.
+3. The PNG is saved to `C:\Personal Projects\ap`.
+4. The same flow can upload the PNG with YouTube's `thumbnails.set` API.
 
 ## What is in this repo
 
-- `ap-manifest.json`
-  Root-level Adobe XD UXP manifest for the Advanced Physics panel.
-- `xd-plugin/ap-thumbnail-panel.js`
-  Adobe XD panel logic.
-- `server/advanced-physics-uploader.js`
-  Local OAuth + YouTube upload service.
-- `.env.example`
-  Required Google OAuth configuration.
+- [app.js](C:\Personal Projects\yt-xd\app.js)
+  Express website + YouTube upload service.
+- [thumbnail-engine.js](C:\Personal Projects\yt-xd\thumbnail-engine.js)
+  Headless renderer that rebuilds the thumbnail layout from `ap.xd`.
+- [ap.xd](C:\Personal Projects\yt-xd\ap.xd)
+  The source template file used by the renderer.
+- [.env.example](C:\Personal Projects\yt-xd\.env.example)
+  Required Google OAuth and local path configuration.
 
 ## Setup
 
@@ -28,35 +28,34 @@ Adobe XD panel + local Node uploader for the Advanced Physics thumbnail workflow
    - `YOUTUBE_CLIENT_ID`
    - `YOUTUBE_CLIENT_SECRET`
    - `SESSION_SECRET`
-   - Adjust `OUTPUT_DIRECTORY` if you want thumbnails saved somewhere other than `C:\Personal Projects\ap`
-4. Start the local uploader:
+   - `OUTPUT_DIRECTORY` if you want thumbnails saved somewhere other than `C:\Personal Projects\ap`
+   - `TEMPLATE_XD_PATH` if `ap.xd` lives elsewhere
+4. Start the app:
 
 ```bash
 npm start
 ```
 
-5. Open Adobe XD and add the plugin via UXP Developer Tool using [ap-manifest.json](C:\Personal Projects\yt-xd\ap-manifest.json).
-6. Open [ap.xd](C:\Personal Projects\yt-xd\ap.xd) in Adobe XD.
+5. Open `http://127.0.0.1:4318` in your browser.
+6. Click `Connect YouTube` once to complete OAuth.
 
-## Using the panel
+## Using the Website
 
-- Make sure Adobe XD is not drilled into a group or layer. The plugin needs the full document edit context so it can inspect every artboard.
-- Click `Check Uploader`.
-- Click `Connect YouTube` once to complete OAuth in your browser.
-- Paste a YouTube video URL or video ID into the panel.
-- Click `Resolve Video` if you want to preview the parsed course/lesson split.
-- Click `Update Thumbnail` to fetch the latest title, match the course artboard, fit the lesson title, save the PNG to `C:\Personal Projects\ap`, and upload that PNG as the video thumbnail.
+- Click `Check Status` to verify templates and OAuth.
+- Paste a YouTube video URL or video ID.
+- Click `Resolve Title` to preview the parsed course/lesson split.
+- Click `Preview Render` to generate the PNG without uploading.
+- Click `Render + Upload` to generate the PNG and update the YouTube thumbnail in one step.
 
 ## Notes
 
-- This is not a headless Adobe XD renderer. The `.xd` document still needs to be open in Adobe XD.
-- The panel uses Adobe XD's built-in UXP APIs. There is no separate Adobe XD npm SDK to install.
-- Existing artboards are matched by the largest white course-title text on the artboard, not by the generic artboard names in the file.
-- If a course artboard does not exist yet, the plugin duplicates a fallback artboard and updates the white course title before exporting.
-- YouTube rejects thumbnails over 2 MB. If your export is too large, add `sharp` later and compress before upload.
-- The OAuth refresh token is stored locally at `server/.data/youtube-tokens.json`.
+- This is a true headless flow. Adobe XD does not need to be open.
+- The renderer parses `ap.xd` directly and uses its artboard metadata and embedded images as the template source.
+- Existing artboards are matched by the course-title text on the artboard, not by the generic artboard names in the file.
+- If a course template does not exist yet, the renderer falls back to `FALLBACK_COURSE_NAME` and swaps in the new course title.
+- The OAuth refresh token is stored locally at `.data/youtube-tokens.json`.
 
-## Verify the scaffold
+## Verify
 
 ```bash
 npm run check

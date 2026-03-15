@@ -1,11 +1,11 @@
 {
   "name": "yt-xd",
   "version": "1.0.0",
-  "description": "Adobe XD thumbnail automation with a local YouTube thumbnail uploader",
-  "main": "server/advanced-physics-uploader.js",
+  "description": "Headless Advanced Physics thumbnail generator and YouTube uploader",
+  "main": "app.js",
   "scripts": {
-    "start": "node server/advanced-physics-uploader.js",
-    "check": "node --check server/advanced-physics-uploader.js && node --check xd-plugin/ap-thumbnail-panel.js"
+    "start": "node app.js",
+    "check": "node --check app.js && node --check thumbnail-engine.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/aniketrajnish/yt-xd#readme",
   "dependencies": {
+    "@fontsource/englebert": "^5.2.10",
+    "@napi-rs/canvas": "^0.1.96",
+    "adm-zip": "^0.5.16",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
